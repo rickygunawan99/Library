@@ -30,7 +30,7 @@ public class CashierModel extends ModelAbstract{
                 return rs.getInt("id");
             }
         }catch (SQLException e){
-            System.out.println("Username dengan nama : " + username + " tidak ditemukan");
+            System.out.println("Login gagal, koneksi tidak ada");
         }
         return -1;
     }
@@ -48,7 +48,7 @@ public class CashierModel extends ModelAbstract{
                         rs.getString("password")
                 );
         }catch (SQLException e){
-            System.out.println("Query gagal. Id tidak ada");
+            System.out.println("Koneksi tidak tersedia");
         }
         return null;
     }
@@ -70,7 +70,7 @@ public class CashierModel extends ModelAbstract{
 
             return ps.executeUpdate();
         }catch (SQLException e){
-            System.out.println("Gagal menambahkan ke database, data tidak sesuai");
+            System.out.println("Gagal menambahkan ke database, cek kembali koneksi ke database");
         }
         return -1;
     }
@@ -83,7 +83,7 @@ public class CashierModel extends ModelAbstract{
             if(rs.next())
                 return rs.getInt("id");
         }catch (Exception e){
-            System.out.println("Query gagal, id masih kosong");
+            System.out.println("query id gagal, table masih kosong");
         }
         return -1;
     }

@@ -26,7 +26,7 @@ public class BookModel extends ModelAbstract{
                         rs.getString("title"),rs.getInt("tersedia"),rs.getString("lokasi") );
             }
         }catch (SQLException e){
-            JOptionPane.showMessageDialog(null,"Judul tidak ditemukan");
+            JOptionPane.showMessageDialog(null,"Pencarian gagal, periksa koneksi terlebih dahulu");
         }
         return null;
     }
@@ -67,7 +67,7 @@ public class BookModel extends ModelAbstract{
                 return ps2.executeUpdate();
             }
         }catch (SQLException e){
-            System.out.println("Gagal tambah buku, masukan jumlah dengan tepat");
+            System.out.println("Update gagal, periksa koneksi terlebih dahulu");
         }
         return -1;
     }
@@ -82,7 +82,7 @@ public class BookModel extends ModelAbstract{
             if(rs.next())
                 return rs.getInt("id");
         }catch (SQLException e){
-            System.out.println("Query Gagal");
+            System.out.println("Gagal select, gagal koneksi");
         }
         return -1;
     }
@@ -95,7 +95,7 @@ public class BookModel extends ModelAbstract{
             ps.setString(2,book.getBookCode());
             return ps.executeUpdate();
         }catch (Exception e){
-            System.out.println("Update gagal");
+            System.out.println("Update gagal, silahkan cek koneksi");
         }
         return -1;
     }
@@ -109,7 +109,7 @@ public class BookModel extends ModelAbstract{
                 ps.setString(1,book.getBookCode());
                 return ps.executeUpdate();
             }catch (SQLException e){
-                System.out.println("Delete tidak berhasil");
+                System.out.println("Delete gagal, koneksi tidak ada");
             }
         }else{
             sql = "UPDATE books SET tersedia = ? WHERE kode = ?";
@@ -119,7 +119,7 @@ public class BookModel extends ModelAbstract{
                 ps.setString(2,book.getBookCode());
                 return ps.executeUpdate();
             }catch (SQLException e){
-                System.out.println("Gagal Update");
+                System.out.println("Gagal Update, koneksi tidak ada");
             }
         }
         return -1;

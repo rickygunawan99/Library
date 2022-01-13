@@ -12,23 +12,8 @@ import java.util.List;
 
 public class MemberModel extends ModelAbstract{
 
-
     public MemberModel(){
         connect();
-    }
-
-    public int getMember(String no_ktp){
-        sql = "SELECT * FROM members WHERE no_ktp = ?";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1,no_ktp);
-            rs = ps.executeQuery();
-            if(rs.next())
-                return rs.getInt("id");
-        }catch (SQLException e){
-            System.out.println("No ktp tidak ditemukan");
-        }
-        return -1;
     }
 
     public MemberEntity getMemberEntity(String no_ktp){
@@ -42,7 +27,7 @@ public class MemberModel extends ModelAbstract{
                 return new MemberEntity(rs.getString("name"),rs.getString("no_ktp"),rs.getString("adress"));
             }
         }catch (SQLException e){
-            System.out.println("Data member tidak ditemukan");
+            System.out.println("Tidak dapat mencari member, cek kembali koneksi");
         }
         return null;
     }
@@ -65,7 +50,7 @@ public class MemberModel extends ModelAbstract{
                 temp.add(rent);
             }
         }catch (SQLException e){
-            System.out.println("No ktp tidak dapat ditemukan");
+            System.out.println("Query gagal, harap cek koneksi anda ");
         }
         return temp;
     }
@@ -80,7 +65,7 @@ public class MemberModel extends ModelAbstract{
 
             return ps.executeUpdate();
         }catch (SQLException e){
-            System.out.println("Register gagal, masukan data dengan tepat");
+            System.out.println("Register gagal, koneksi tidak ada");
         }
         return -1;
     }

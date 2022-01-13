@@ -5,7 +5,6 @@ import Model.MemberModel;
 import views.*;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.List;
 
 public class MemberController implements Viewable {
 
