@@ -13,9 +13,7 @@ public class Database {
         try{
             Class.forName(Config.DB_DRIVER);
 
-            Connection koneksi = DriverManager.getConnection(url,user,pass);
-
-            return koneksi;
+            return DriverManager.getConnection(url,user,pass);
 
         }catch(Exception e){
             System.out.println(e + " | getConnection()");

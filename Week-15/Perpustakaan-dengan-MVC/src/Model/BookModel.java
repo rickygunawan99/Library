@@ -26,8 +26,7 @@ public class BookModel extends ModelAbstract{
                         rs.getString("title"),rs.getInt("tersedia"),rs.getString("lokasi") );
             }
         }catch (SQLException e){
-            System.out.println("Buku dengan judul " + title + " tidak ditemukan");
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Judul tidak ditemukan");
         }
         return null;
     }
@@ -68,7 +67,7 @@ public class BookModel extends ModelAbstract{
                 return ps2.executeUpdate();
             }
         }catch (SQLException e){
-            System.out.println(e.getErrorCode());
+            System.out.println("Gagal tambah buku, masukan jumlah dengan tepat");
         }
         return -1;
     }
@@ -83,7 +82,7 @@ public class BookModel extends ModelAbstract{
             if(rs.next())
                 return rs.getInt("id");
         }catch (SQLException e){
-            System.out.println(e.getErrorCode());
+            System.out.println("Query Gagal");
         }
         return -1;
     }
@@ -96,7 +95,7 @@ public class BookModel extends ModelAbstract{
             ps.setString(2,book.getBookCode());
             return ps.executeUpdate();
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println("Update gagal");
         }
         return -1;
     }
@@ -110,7 +109,7 @@ public class BookModel extends ModelAbstract{
                 ps.setString(1,book.getBookCode());
                 return ps.executeUpdate();
             }catch (SQLException e){
-                System.out.println(e);
+                System.out.println("Delete tidak berhasil");
             }
         }else{
             sql = "UPDATE books SET tersedia = ? WHERE kode = ?";
@@ -120,7 +119,7 @@ public class BookModel extends ModelAbstract{
                 ps.setString(2,book.getBookCode());
                 return ps.executeUpdate();
             }catch (SQLException e){
-                System.out.println(e);
+                System.out.println("Gagal Update");
             }
         }
         return -1;

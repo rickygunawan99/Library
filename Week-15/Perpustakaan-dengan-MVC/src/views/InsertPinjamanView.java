@@ -102,7 +102,7 @@ public class InsertPinjamanView extends JFrame {
             try {
                 int val = new InsertPinjamanController(cashier).insert(rent);
                 if(val > 0){
-                    int id = new InsertPinjamanController().getIdPinjaman();
+                    int id = new InsertPinjamanController(cashier).getIdPinjaman();
                     JOptionPane.showMessageDialog(null,"Berhasil Daftar Pinjaman dengan id " + id);
                     dispose();
                 }else

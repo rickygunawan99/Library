@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Des 2021 pada 05.14
+-- Waktu pembuatan: 13 Jan 2022 pada 06.03
 -- Versi server: 10.4.20-MariaDB
 -- Versi PHP: 8.0.9
 
@@ -40,9 +40,10 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `kode`, `title`, `tersedia`, `lokasi`) VALUES
-(1, '123', 'ENTAHLAH', 3, '3B'),
 (2, '1234', 'Ini budi', 1, '2C'),
-(4, '12345', 'Ini ani', 0, '9B');
+(4, '12345', 'Ini ani', 2, '9B'),
+(6, '132', 'buku apa', 2, '3C'),
+(7, '123', 'entahlah', 1, '5D');
 
 -- --------------------------------------------------------
 
@@ -76,9 +77,9 @@ CREATE TABLE `list` (
   `id` int(11) NOT NULL,
   `kodeBuku` varchar(50) NOT NULL,
   `bookTitle` varchar(50) NOT NULL,
-  `namaVisitor` varchar(50) NOT NULL,
-  `noKtpVisitor` varchar(50) NOT NULL,
-  `alamatVisitor` varchar(50) NOT NULL,
+  `namaMember` varchar(50) NOT NULL,
+  `noKtpMember` varchar(50) NOT NULL,
+  `alamatMember` varchar(50) NOT NULL,
   `namaKasir` varchar(50) NOT NULL,
   `dayStart` varchar(50) NOT NULL,
   `dayEnd` varchar(50) NOT NULL,
@@ -91,16 +92,21 @@ CREATE TABLE `list` (
 -- Dumping data untuk tabel `list`
 --
 
-INSERT INTO `list` (`id`, `kodeBuku`, `bookTitle`, `namaVisitor`, `noKtpVisitor`, `alamatVisitor`, `namaKasir`, `dayStart`, `dayEnd`, `status`, `total`, `denda`) VALUES
-(1, '12444', 'Bapak', 'Saya', '8127', 'Jalan 123', 'Budi', '2021-12-28', '2021-12-31', 1, 7500, 0);
+INSERT INTO `list` (`id`, `kodeBuku`, `bookTitle`, `namaMember`, `noKtpMember`, `alamatMember`, `namaKasir`, `dayStart`, `dayEnd`, `status`, `total`, `denda`) VALUES
+(1, '12444', 'Bapak', 'Saya', '8127', 'Jalan 123', 'Budi', '2021-12-28', '2021-12-31', 1, 7500, 0),
+(2, '123', 'entahlah', 'Saya', '8127', 'Jalan 123', 'Budi', '2022-01-11', '2022-01-14', 1, 3000, 0),
+(3, '132', 'buku apa', 'Saya siapa?', '127', 'JL 22', 'Budi', '2022-01-11', '2022-01-16', 1, 15000, 0),
+(4, '132', 'buku apa', 'Saya siapa?', '127', 'JL 22', 'Budi', '2022-01-11', '2022-01-14', 1, 15000, 0),
+(5, '12345', 'Ini ani', 'tono', '9182', 'alamat1', 'Budi', '2022-01-11', '2022-01-14', 1, 3000, 0),
+(6, '123', 'entahlah', 'Saya', '8127', 'Jalan 123', 'Budi', '2022-01-13', '2022-01-16', 1, 12000, 0);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `visitors`
+-- Struktur dari tabel `members`
 --
 
-CREATE TABLE `visitors` (
+CREATE TABLE `members` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `no_ktp` varchar(50) NOT NULL,
@@ -108,12 +114,14 @@ CREATE TABLE `visitors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `visitors`
+-- Dumping data untuk tabel `members`
 --
 
-INSERT INTO `visitors` (`id`, `name`, `no_ktp`, `adress`) VALUES
+INSERT INTO `members` (`id`, `name`, `no_ktp`, `adress`) VALUES
 (1, 'Saya', '8127', 'Jalan 123'),
-(3, 'Saya siapa?', '127', 'JL 22');
+(3, 'Saya siapa?', '127', 'JL 22'),
+(5, 'tono', '9182', 'alamat1'),
+(6, 'Andhika', '7689', 'Jl apa');
 
 --
 -- Indexes for dumped tables
@@ -139,9 +147,9 @@ ALTER TABLE `list`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `visitors`
+-- Indeks untuk tabel `members`
 --
-ALTER TABLE `visitors`
+ALTER TABLE `members`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `no_ktp` (`no_ktp`);
 
@@ -153,7 +161,7 @@ ALTER TABLE `visitors`
 -- AUTO_INCREMENT untuk tabel `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `cashiers`
@@ -165,13 +173,13 @@ ALTER TABLE `cashiers`
 -- AUTO_INCREMENT untuk tabel `list`
 --
 ALTER TABLE `list`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT untuk tabel `visitors`
+-- AUTO_INCREMENT untuk tabel `members`
 --
-ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
