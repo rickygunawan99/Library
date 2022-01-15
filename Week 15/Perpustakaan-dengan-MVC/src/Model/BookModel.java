@@ -52,11 +52,9 @@ public class BookModel extends ModelAbstract{
 
             if(rs.next()){
                 int currentStock = rs.getInt("tersedia");
-                sql =  "UPDATE books SET tersedia = ? WHERE id = ?";
-                PreparedStatement ps2 = conn.prepareStatement(sql);
-                ps2.setInt(1,currentStock+1);
-                ps2.setInt(2,exist);
-                return ps2.executeUpdate();
+                sql =  "UPDATE books SET tersedia = %d WHERE id = '%s' ";
+                sql = String.format(sql, currentStock+1, exist);
+                return exUpdate(sql);
             }
         }catch (SQLException e){
             System.out.println("Update gagal, periksa koneksi terlebih dahulu");
