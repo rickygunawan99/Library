@@ -5,9 +5,9 @@ import Entity.BookEntity;
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 public class BookModel extends ModelAbstract{
+    private String sql;
     public BookModel(){
         connect();
     }
@@ -37,18 +37,10 @@ public class BookModel extends ModelAbstract{
             return updateBook(exist);
         }
 
-        sql = "INSERT INTO Books(kode,title,lokasi) VALUES (?,?,?)";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, book.getBookCode());
-            ps.setString(2,book.getName());
-            ps.setString(3,book.getLocation());
-            return ps.executeUpdate();
-        } catch (SQLIntegrityConstraintViolationException e){
-            return -2;
-        } catch (SQLException e){
-            return -1;
-        }
+        sql = "INSERT INTO Books(kode,title,lokasi) VALUES ('%s', '%s', '%s')";
+        sql = String.format(sql,book.getBookCode(),book.getName(),book.getLocation());
+
+        return exUpdate(sql);
     }
 
     public int updateBook(int exist){
@@ -88,39 +80,30 @@ public class BookModel extends ModelAbstract{
     }
 
     public int updateBookLocation(BookEntity book){
-        sql = "UPDATE books SET lokasi = ? WHERE kode = ?";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1,book.getLocation());
-            ps.setString(2,book.getBookCode());
-            return ps.executeUpdate();
-        }catch (Exception e){
-            System.out.println("Update gagal, silahkan cek koneksi");
-        }
-        return -1;
+        sql = "UPDATE books SET lokasi = '%s' WHERE kode = '%s'";
+        sql = String.format(sql,book.getLocation(), book.getBookCode());
+
+        return exUpdate(sql);
     }
 
-    public int delete(BookEntity book, String jumlah){
+    public int delete(BookEntity book, String jumlah) {
         int count = Integer.parseInt(jumlah);
-        if(jumlah.equalsIgnoreCase("All") || book.getJmlTersedia()-count<0){
-            sql = "DELETE FROM books WHERE kode = ?";
-            try {
-                ps = conn.prepareStatement(sql);
-                ps.setString(1,book.getBookCode());
-                return ps.executeUpdate();
-            }catch (SQLException e){
-                System.out.println("Delete gagal, koneksi tidak ada");
-            }
-        }else{
-            sql = "UPDATE books SET tersedia = ? WHERE kode = ?";
-            try {
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1,book.getJmlTersedia()-count);
-                ps.setString(2,book.getBookCode());
-                return ps.executeUpdate();
-            }catch (SQLException e){
-                System.out.println("Gagal Update, koneksi tidak ada");
-            }
+        if (jumlah.equalsIgnoreCase("All") || book.getJmlTersedia() - count <= 0) {
+            sql = " DELETE FROM books WHERE kode = '%s' ";
+            sql = String.format(sql,book.getBookCode());
+        } else {
+            sql = " UPDATE books SET tersedia = %d WHERE kode = '%s' ";
+            sql = String.format(sql, book.getJmlTersedia() - count, book.getBookCode());
+        }
+        return exUpdate(sql);
+    }
+
+    public int exUpdate(String format){
+        try {
+            stmt = conn.createStatement();
+            return stmt.executeUpdate(format);
+        }catch (SQLException e){
+            System.out.println("Update tidak berhasil, Cek koneksi kembali");
         }
         return -1;
     }

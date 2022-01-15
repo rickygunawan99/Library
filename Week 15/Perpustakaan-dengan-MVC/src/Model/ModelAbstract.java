@@ -7,7 +7,6 @@ public abstract class ModelAbstract {
     protected Statement stmt;
     protected PreparedStatement ps;
     protected ResultSet rs;
-    protected String sql;
 
     protected void connect(){
         conn = Util.Helper.Database.getConnection();

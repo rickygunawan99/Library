@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberModel extends ModelAbstract{
+    private String sql;
 
     public MemberModel(){
         connect();
@@ -55,19 +56,10 @@ public class MemberModel extends ModelAbstract{
         return temp;
     }
 
-    public int reg(MemberEntity vs){
-        sql = "INSERT INTO members(name,no_ktp,adress) VALUES (?,?,?)";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1,vs.getName());
-            ps.setString(2,vs.getIdKtp());
-            ps.setString(3,vs.getAdress());
-
-            return ps.executeUpdate();
-        }catch (SQLException e){
-            System.out.println("Register gagal, koneksi tidak ada");
-        }
-        return -1;
+    public int reg(MemberEntity member){
+        sql = "INSERT INTO members(name,no_ktp,adress) VALUES ('%s', '%s', '%s')";
+        sql = String.format(sql, member.getName(), member.getIdKtp(), member.getAdress());
+        return exUpdate(sql);
     }
 
     public DefaultTableModel getTable(String no_ktp){
@@ -86,5 +78,15 @@ public class MemberModel extends ModelAbstract{
             table.addRow(row);
         }
         return table;
+    }
+
+    public int exUpdate(String sql){
+        try {
+            stmt = conn.createStatement();
+            return stmt.executeUpdate(sql);
+        }catch (Exception e){
+            System.out.println("Koneksi tidak berhasil, coba lagi");
+        }
+        return -1;
     }
 }

@@ -1,15 +1,10 @@
 package Model;
 
-import Entity.BookEntity;
-import Entity.CashierEntity;
-import Entity.RentBookEntity;
-import Entity.MemberEntity;
-
-import java.sql.PreparedStatement;
+import Entity.*;
 import java.sql.SQLException;
 
 public class CashierModel extends ModelAbstract{
-    //Member
+    private String sql;
 
     public CashierModel(){
         connect();

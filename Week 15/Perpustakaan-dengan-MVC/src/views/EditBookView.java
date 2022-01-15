@@ -113,6 +113,10 @@ public class EditBookView extends JFrame {
             try{
                 String del = JOptionPane.showInputDialog("Jumlah untuk didelete : ");
                 int cek = new EditBookController(book).delete(del);
+                if(cek > 0){
+                    JOptionPane.showMessageDialog(null, "Berhasil delete");
+                    dispose();
+                }
             }catch (Exception ex){
                 System.out.println(ex);
             }
